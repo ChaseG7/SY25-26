@@ -1,0 +1,10 @@
+Task 'Finish homework' was not completed.
+Task 'Clean room' was not completed.
+Task 'Submit science project' was not completed.
+Task 'Read 20 pages of book' was not completed.
+Task 'Practice piano' was not completed.
+Task 'Grocery shopping' was completed on time.
+Task 'Exercise for 30 minutes' was not completed.
+Task 'Call grandma' was completed on time.
+Task 'Write journal entry' was completed on time.
+Task 'Organize desk' was completed on time.
