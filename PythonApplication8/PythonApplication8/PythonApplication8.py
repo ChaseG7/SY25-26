@@ -1,9 +1,9 @@
-import pygamez
+import pygame
 import random
 
 # Initialize Pygame
 pygame.init()
-
+#copilot helped with the collison cause i was stuck
 # Constants
 WIDTH, HEIGHT = 800, 600
 WHITE = (255, 255, 255)
@@ -12,6 +12,7 @@ BLUE = (0, 0, 255)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
+font = pygame.font.SysFont(None, 36)  # Font for score display
 
 # Player properties
 player_pos = [WIDTH // 2, HEIGHT - 50]
@@ -29,39 +30,43 @@ while not game_over:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             game_over = True
+           
+    keys = pygame.key.get_pressed()  # Get the current key state
 
-    # --- BUG 1: Movement Logic ---
-    keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT]:
-        player_pos[0] -= 5  
+        player_pos[0] -= 5
     if keys[pygame.K_RIGHT]:
-        player_pos[0] += 5  
+        player_pos[0] += 5
 
-    player_pos[0] = max(0, min(WIDTH - player_size, player_pos[0]))
-
+    # Update enemy position
     enemy_pos[1] += enemy_speed
 
-    # --- BUG 2: Resetting the Enemy ---
+    # Resetting the Enemy
     if enemy_pos[1] > HEIGHT:
         enemy_pos[1] = 0
         enemy_pos[0] = random.randint(0, WIDTH - enemy_size)
-        score += 1
-        print(f"Score: {score}")
+        score += 1  # Increment score only when the enemy resets
+        print("+1")  # Print "+1" instead of the total score
 
-    # --- BUG 3: Collision Detection ---
+    # Collision Detection
     player_rect = pygame.Rect(player_pos[0], player_pos[1], player_size, player_size)
     enemy_rect = pygame.Rect(enemy_pos[0], enemy_pos[1], enemy_size, enemy_size)
+
     if player_rect.colliderect(enemy_rect):
         print("Game Over!")
         game_over = True
 
     # Drawing
     screen.fill((0, 0, 0))
-    
     pygame.draw.rect(screen, RED, (enemy_pos[0], enemy_pos[1], enemy_size, enemy_size))
     pygame.draw.rect(screen, BLUE, (player_pos[0], player_pos[1], player_size, player_size))
+
+    # Draw the score in the top-left corner
+    score_surface = font.render(f"Score: {score}", True, WHITE)
+    screen.blit(score_surface, (10, 10))
 
     pygame.display.update()
     clock.tick(30)
 
 pygame.quit()
+
